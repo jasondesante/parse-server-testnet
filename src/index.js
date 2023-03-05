@@ -83,7 +83,12 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 // async function run() {
 //   try {
 //     // Connect the client to the server
-// await client.connect();
+//     await client.connect();
+
+//     // app.listen(config.PORT, () => {
+//     //   console.log("listening for requests");
+//     // })
+
 //     // Establish and verify connection
 //     await client.db('admin').command({ ping: 1 });
 //     console.log('Connected successfully to server');
@@ -94,33 +99,29 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 // }
 // run().catch(console.dir);
 
-async function run() {
-  try {
-    // Connect the client to the server
-    await client.connect();
-    // app.listen(config.PORT, () => {
-    //   console.log("listening for requests");
-    // })
-    // Establish and verify connection
-    await client.db('admin').command({ ping: 1 });
-    console.log('Connected successfully to server');
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
 //
 
 
 app.use(`/server`, parseServer.app);
 
 const httpServer = http.createServer(app);
-httpServer.listen(config.PORT, async () => {
 
-  console.log(`Moralis Server is running on port ${config.PORT}.`);
+// httpServer.listen(config.PORT, async () => {
 
+//   console.log(`Moralis Server is running on port ${config.PORT}.`);
+
+// });
+
+
+client.connect(err => {
+  if(err){ console.error(err); return false;}
+  // connection to mongo is successful, listen for requests
+  httpServer.listen(PORT, () => {
+      console.log("listening for requests");
+      console.log(`Moralis Server is running on port ${config.PORT}.`);
+  })
 });
+
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
 

@@ -49,26 +49,26 @@ app.use(cors());
 
 
 
-//
-const uri = process.env.DATABASE_URI;
-const client = new MongoClient(uri);
+// trying to make server work
+// const uri = process.env.DATABASE_URI;
+// const client = new MongoClient(uri);
 
-app.get("/items/:my_item", async (req, res) => {
-  let my_item = req.params.my_item;
-  let item = await client.db("my_db")
-              .collection("my_collection")
-              .findOne({my_item: my_item})
+// app.get("/items/:my_item", async (req, res) => {
+//   let my_item = req.params.my_item;
+//   let item = await client.db("my_db")
+//               .collection("my_collection")
+//               .findOne({my_item: my_item})
 
-  return res.json(item)
-})
+//   return res.json(item)
+// })
 
-client.connect(err => {
-  if(err){ console.error(err); return false;}
-  // connection to mongo is successful, listen for requests
-  app.listen(PORT, () => {
-      console.log("listening for requests");
-  })
-});
+// client.connect(err => {
+//   if(err){ console.error(err); return false;}
+//   // connection to mongo is successful, listen for requests
+//   app.listen(PORT, () => {
+//       console.log("listening for requests");
+//   })
+// });
 //
 
 

@@ -98,9 +98,9 @@ async function run() {
   try {
     // Connect the client to the server
     await client.connect();
-    app.listen(config.PORT, () => {
-      console.log("listening for requests");
-    })
+    // app.listen(config.PORT, () => {
+    //   console.log("listening for requests");
+    // })
     // Establish and verify connection
     await client.db('admin').command({ ping: 1 });
     console.log('Connected successfully to server');

@@ -70,7 +70,8 @@ ParseServer.createLiveQueryServer(httpServer);
 // const client = new MongoClient(uri)
 ;
 // Create a new MongoClient
-const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
+// const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
+const client = new MongoClient(`${process.env.DATABASE_URI}:${PORT}`);
 
 // app.get("/items/:my_item", async (req, res) => {
 //   let my_item = req.params.my_item;

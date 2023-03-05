@@ -10,7 +10,7 @@ import http from 'http';
 
 //
 import { MongoClient } from 'mongodb';
-const PORT = process.env.PORT || 3000
+const PORT = config.PORT || 3000
 //
 
 export const app = express();
@@ -59,7 +59,7 @@ app.use(cors());
 
 // Create a new MongoClient
 // const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
-const client = new MongoClient(`${process.env.DATABASE_URI}:${PORT}`);
+const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
 // app.get("/items/:my_item", async (req, res) => {
 //   let my_item = req.params.my_item;
@@ -98,7 +98,7 @@ async function run() {
   try {
     // Connect the client to the server
     await client.connect();
-    app.listen(PORT, () => {
+    app.listen(config.PORT, () => {
       console.log("listening for requests");
     })
     // Establish and verify connection

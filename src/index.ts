@@ -110,14 +110,10 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${PORT}`);
 async function run() {
   try {
     // Connect the client to the server
-    await client.connect(err => {
-      if (err) { console.error(err); return false; }
-      // connection to mongo is successful, listen for requests
-      app.listen(PORT, () => {
-        console.log("listening for requests");
-      })
-    });
-
+    await client.connect();
+    app.listen(PORT, () => {
+      console.log("listening for requests");
+    })
     // Establish and verify connection
     await client.db('admin').command({ ping: 1 });
     console.log('Connected successfully to server');

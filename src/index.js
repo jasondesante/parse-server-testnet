@@ -64,43 +64,46 @@ httpServer.listen(config.PORT, async () => {
 ParseServer.createLiveQueryServer(httpServer);
 
 
+
 // trying to make server work
 
 // const uri = process.env.DATABASE_URI || "";
-// const client = new MongoClient(uri)
-;
+// const client = new MongoClient(uri);
+
 // Create a new MongoClient
 // const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
 const client = new MongoClient(`${process.env.DATABASE_URI}:${PORT}`);
 
-// app.get("/items/:my_item", async (req, res) => {
-//   let my_item = req.params.my_item;
-//   let item = await client.db("my_db")
-//               .collection("my_collection")
-//               .findOne({my_item: my_item})
+app.get("/items/:my_item", async (req, res) => {
+  let my_item = req.params.my_item;
+  let item = await client.db("my_db")
+              .collection("my_collection")
+              .findOne({my_item: my_item})
 
-//   return res.json(item)
-// })
+  return res.json(item)
+})
 
-// client.connect(err => {
-//   if(err){ console.error(err); return false;}
-//   // connection to mongo is successful, listen for requests
-//   app.listen(PORT, () => {
-//       console.log("listening for requests");
-//   })
-// });
+client.connect(err => {
+  if(err){ console.error(err); return false;}
+  // connection to mongo is successful, listen for requests
+  app.listen(PORT, () => {
+      console.log("listening for requests");
+  })
+});
 
-async function run() {
-  try {
-    // Connect the client to the server
-    await client.connect();
-    // Establish and verify connection
-    await client.db('admin').command({ ping: 1 });
-    console.log('Connected successfully to server');
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+// async function run() {
+//   try {
+//     // Connect the client to the server
+//     await client.connect();
+//     // Establish and verify connection
+//     await client.db('admin').command({ ping: 1 });
+//     console.log('Connected successfully to server');
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
+
+
 //

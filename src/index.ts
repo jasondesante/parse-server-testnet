@@ -50,8 +50,12 @@ app.use(cors());
 
 
 // trying to make server work
-// const uri = process.env.DATABASE_URI;
-// const client = new MongoClient(uri);
+
+// const uri = process.env.DATABASE_URI || "";
+// const client = new MongoClient(uri)
+;
+// Create a new MongoClient
+const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
 
 // app.get("/items/:my_item", async (req, res) => {
 //   let my_item = req.params.my_item;
@@ -69,6 +73,20 @@ app.use(cors());
 //       console.log("listening for requests");
 //   })
 // });
+
+async function run() {
+  try {
+    // Connect the client to the server
+    await client.connect();
+    // Establish and verify connection
+    await client.db('admin').command({ ping: 1 });
+    console.log('Connected successfully to server');
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 //
 
 

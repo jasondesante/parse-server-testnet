@@ -49,6 +49,21 @@ app.use(cors());
 
 
 
+
+
+
+app.use(`/server`, parseServer.app);
+
+const httpServer = http.createServer(app);
+httpServer.listen(config.PORT, async () => {
+  
+    console.log(`Moralis Server is running on port ${config.PORT}.`);
+
+});
+// This will enable the Live Query real-time server
+ParseServer.createLiveQueryServer(httpServer);
+
+
 // trying to make server work
 
 // const uri = process.env.DATABASE_URI || "";
@@ -88,16 +103,3 @@ async function run() {
 }
 run().catch(console.dir);
 //
-
-
-
-app.use(`/server`, parseServer.app);
-
-const httpServer = http.createServer(app);
-httpServer.listen(config.PORT, async () => {
-  
-    console.log(`Moralis Server is running on port ${config.PORT}.`);
-
-});
-// This will enable the Live Query real-time server
-ParseServer.createLiveQueryServer(httpServer);

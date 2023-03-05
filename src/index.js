@@ -1,4 +1,5 @@
 import Moralis from 'moralis';
+
 import express from 'express';
 import cors from 'cors';
 import config from './config';
@@ -7,7 +8,36 @@ import { parseServer } from './parseServer';
 import ParseServer from 'parse-server';
 import http from 'http';
 
+//
+import { MongoClient } from 'mongodb';
+const PORT = process.env.PORT || 3000
+//
+
 export const app = express();
+
+
+//
+const uri = process.env.DATABASE_URI;
+const client = new MongoClient(uri);
+
+app.get("/items/:my_item", async (req, res) => {
+  let my_item = req.params.my_item;
+  let item = await client.db("my_db")
+              .collection("my_collection")
+              .findOne({my_item: my_item})
+
+  return res.json(item)
+})
+
+client.connect(err => {
+  if(err){ console.error(err); return false;}
+  // connection to mongo is successful, listen for requests
+  app.listen(PORT, () => {
+      console.log("listening for requests");
+  })
+});
+//
+
 
 Moralis.start({
   apiKey: config.MORALIS_API_KEY,

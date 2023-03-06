@@ -71,7 +71,6 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 // })
 
 // client.connect(err => {
-client.connect().then(() => {
   // if (err) { console.error(err); return false; }
 
 
@@ -80,28 +79,28 @@ client.connect().then(() => {
   //   console.log("listening for requests");
   // })
 
-});
+// });
 
 
 
-// async function run() {
-//   try {
-//     // Connect the client to the server
-//     await client.connect();
+async function run() {
+  try {
+    // Connect the client to the server
+    await client.connect();
 
-//     httpServer.listen(config.PORT, () => {
-//       console.log("listening for requests");
-//     })
+    // httpServer.listen(config.PORT, () => {
+    //   console.log("listening for requests");
+    // })
 
-//     // Establish and verify connection
-//     await client.db('admin').command({ ping: 1 });
-//     console.log('Connected successfully to server');
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
+    // Establish and verify connection
+    await client.db('admin').command({ ping: 1 });
+    console.log('Connected successfully to server');
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
 
 

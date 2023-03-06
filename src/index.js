@@ -75,20 +75,10 @@ client.connect().then(() => {
   // if (err) { console.error(err); return false; }
 
 
-  app.use(`/server`, parseServer.app);
-
-  const httpServer = http.createServer(app);
-
-  httpServer.listen(config.PORT, async () => {
-
-    console.log(`Moralis Server is running on port ${config.PORT}.`);
-
-  });
-
   // connection to mongo is successful, listen for requests
-  // app.listen(PORT, () => {
-  //   console.log("listening for requests");
-  // })
+  app.listen(PORT, () => {
+    console.log("listening for requests");
+  })
 
 });
 
@@ -145,15 +135,15 @@ client.connect().then(() => {
 
 
 
-// app.use(`/server`, parseServer.app);
+app.use(`/server`, parseServer.app);
 
-// const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 
-// httpServer.listen(config.PORT, async () => {
+httpServer.listen(config.PORT, async () => {
 
-//   console.log(`Moralis Server is running on port ${config.PORT}.`);
+  console.log(`Moralis Server is running on port ${config.PORT}.`);
 
-// });
+});
 
 
 

@@ -76,9 +76,9 @@ client.connect().then(() => {
 
 
   // connection to mongo is successful, listen for requests
-  app.listen(PORT, () => {
-    console.log("listening for requests");
-  })
+  // app.listen(PORT, () => {
+  //   console.log("listening for requests");
+  // })
 
 });
 

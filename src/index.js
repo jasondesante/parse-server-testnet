@@ -70,8 +70,9 @@ app.get("/items/:my_item", async (req, res) => {
   return res.json(item)
 })
 
-client.connect(err => {
-  if (err) { console.error(err); return false; }
+// client.connect(err => {
+client.connect().then(() => {
+  // if (err) { console.error(err); return false; }
 
 
   app.use(`/server`, parseServer.app);

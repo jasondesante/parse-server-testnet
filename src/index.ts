@@ -57,11 +57,11 @@ app.use(`/server`, parseServer.app);
 
 const httpServer = http.createServer(app);
 
-// httpServer.listen(config.PORT, async () => {
+httpServer.listen(config.PORT, async () => {
 
-//   console.log(`Moralis Server is running on port ${config.PORT}.`);
+  console.log(`Moralis Server is running on port ${config.PORT}.`);
 
-// });
+});
 
 
 
@@ -74,7 +74,7 @@ const httpServer = http.createServer(app);
 
 // Create a new MongoClient
 // const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
-const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
+// const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
 // app.get("/items/:my_item", async (req, res) => {
 //   let my_item = req.params.my_item;
@@ -95,24 +95,24 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
 
 
-async function run() {
-  try {
-    // Connect the client to the server
-    await client.connect();
+// async function run() {
+//   try {
+//     // Connect the client to the server
+//     await client.connect();
 
-    httpServer.listen(config.PORT, () => {
-      console.log("listening for requests");
-    })
+//     httpServer.listen(config.PORT, () => {
+//       console.log("listening for requests");
+//     })
 
-    // Establish and verify connection
-    await client.db('admin').command({ ping: 1 });
-    console.log('Connected successfully to server');
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+//     // Establish and verify connection
+//     await client.db('admin').command({ ping: 1 });
+//     console.log('Connected successfully to server');
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
 
 //
 

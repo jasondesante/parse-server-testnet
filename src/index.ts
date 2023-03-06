@@ -49,6 +49,8 @@ app.use(cors());
 
 
 
+app.use(`/server`, parseServer.app);
+const httpServer = http.createServer(app);
 
 
 
@@ -83,42 +85,14 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
 
 
-async function run() {
-  try {
-    // Connect the client to the server
-    await client.connect();
-
-    // httpServer.listen(config.PORT, () => {
-    //   console.log("listening for requests");
-    // })
-
-    // Establish and verify connection
-    await client.db('admin').command({ ping: 1 });
-    console.log('Connected successfully to server');
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-
-
-
 // async function run() {
 //   try {
 //     // Connect the client to the server
-//     await client.connect().then(() => {
+//     await client.connect();
 
-//       app.use(`/server`, parseServer.app);
-
-//       const httpServer = http.createServer(app);
-
-//       httpServer.listen(config.PORT, async () => {
-//         console.log(`Moralis Server is running on port ${config.PORT}.`);
-//       });
-
-//     });
-
+//     // httpServer.listen(config.PORT, () => {
+//     //   console.log("listening for requests");
+//     // })
 
 //     // Establish and verify connection
 //     await client.db('admin').command({ ping: 1 });
@@ -130,19 +104,47 @@ run().catch(console.dir);
 // }
 // run().catch(console.dir);
 
+
+
+async function run() {
+  try {
+    // Connect the client to the server
+    await client.connect().then(() => {
+
+      // app.use(`/server`, parseServer.app);
+
+      // const httpServer = http.createServer(app);
+
+      httpServer.listen(config.PORT, async () => {
+        console.log(`Moralis Server is running on port ${config.PORT}.`);
+      });
+
+    });
+
+
+    // Establish and verify connection
+    await client.db('admin').command({ ping: 1 });
+    console.log('Connected successfully to server');
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
 //
 
 
 
-app.use(`/server`, parseServer.app);
+// app.use(`/server`, parseServer.app);
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 
-httpServer.listen(config.PORT, async () => {
+// httpServer.listen(config.PORT, async () => {
 
-  console.log(`Moralis Server is running on port ${config.PORT}.`);
+//   console.log(`Moralis Server is running on port ${config.PORT}.`);
 
-});
+// });
 
 
 

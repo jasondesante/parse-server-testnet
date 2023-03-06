@@ -64,18 +64,31 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 app.get("/items/:my_item", async (req, res) => {
   let my_item = req.params.my_item;
   let item = await client.db("my_db")
-              .collection("my_collection")
-              .findOne({my_item: my_item})
+    .collection("my_collection")
+    .findOne({ my_item: my_item })
 
   return res.json(item)
 })
 
 client.connect(err => {
-  if(err){ console.error(err); return false;}
+  if (err) { console.error(err); return false; }
+
+
+  app.use(`/server`, parseServer.app);
+
+  const httpServer = http.createServer(app);
+
+  httpServer.listen(config.PORT, async () => {
+
+    console.log(`Moralis Server is running on port ${config.PORT}.`);
+
+  });
+
   // connection to mongo is successful, listen for requests
-  app.listen(PORT, () => {
-      console.log("listening for requests");
-  })
+  // app.listen(PORT, () => {
+  //   console.log("listening for requests");
+  // })
+
 });
 
 

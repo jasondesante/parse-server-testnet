@@ -118,16 +118,16 @@ async function run() {
         console.log(`Moralis Server is running on port ${config.PORT}.`);
       });
 
-
       // This will enable the Live Query real-time server
       ParseServer.createLiveQueryServer(httpServer);
 
     });
 
 
-    // Establish and verify connection
-    await client.db('admin').command({ ping: 1 });
-    console.log('Connected successfully to server');
+    // // Establish and verify connection
+    // await client.db('admin').command({ ping: 1 });
+    // console.log('Connected successfully to server');
+
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();

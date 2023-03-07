@@ -89,30 +89,28 @@ const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
 async function run() {
   try {
-    // // Connect the client to the server
-    // await client.connect().then(() => {
-
-    //   app.use(`/server`, parseServer.app);
-
-    //   const httpServer = http.createServer(app);
-
-    //   httpServer.listen(config.PORT, async () => {
-    //     console.log(`Moralis Server is running on port ${config.PORT}.`);
-    //   });
-
-    //   // This will enable the Live Query real-time server
-    //   ParseServer.createLiveQueryServer(httpServer);
-
-    // });
-
     // Connect the client to the server
-    await client.connect()
-    .then(() => {
+    await client.connect().then(() => {
+
       app.listen(config.PORT, () => {
         console.log("listening for requests");
       })
+
+      app.use(`/server`, parseServer.app);
+
+      const httpServer = http.createServer(app);
+
+      httpServer.listen(config.PORT, async () => {
+        console.log(`Moralis Server is running on port ${config.PORT}.`);
+      });
+
+      // This will enable the Live Query real-time server
+      ParseServer.createLiveQueryServer(httpServer);
+
     })
     .catch(err => { console.log(err); });
+
+    
     
     // await client.connect();
     // app.listen(config.PORT, () => {
@@ -140,9 +138,7 @@ run().catch(console.dir);
 // const httpServer = http.createServer(app);
 
 // httpServer.listen(config.PORT, async () => {
-
 //   console.log(`Moralis Server is running on port ${config.PORT}.`);
-
 // });
 
 

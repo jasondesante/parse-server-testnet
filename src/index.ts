@@ -106,16 +106,23 @@ async function run() {
     // });
 
     // Connect the client to the server
-    await client.connect();
-
-    app.listen(config.PORT, () => {
-      console.log("listening for requests");
+    await client.connect()
+    .then(() => {
+      app.listen(config.PORT, () => {
+        console.log("listening for requests");
+      })
     })
+    .catch(err => { console.log(err); });
+    
+    // await client.connect();
+    // app.listen(config.PORT, () => {
+    //   console.log("listening for requests");
+    // })
 
 
     // // Establish and verify connection
-    // await client.db('admin').command({ ping: 1 });
-    // console.log('Connected successfully to server');
+    await client.db('admin').command({ ping: 1 });
+    console.log('Connected successfully to server');
 
   } finally {
     // Ensures that the client will close when you finish/error

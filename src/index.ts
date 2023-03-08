@@ -39,7 +39,7 @@ app.use(express.json());
 
 
 
-// app.use(cors());
+app.use(cors());
 
 // app.use(cors({
 //   origin: "*",
@@ -63,14 +63,14 @@ app.use(express.json());
 // const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
 const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
-app.get("/items/:my_item", async (req, res) => {
-  let my_item = req.params.my_item;
-  let item = await client.db("my_db")
-    .collection("my_collection")
-    .findOne({ my_item: my_item })
+// app.get("/items/:my_item", async (req, res) => {
+//   let my_item = req.params.my_item;
+//   let item = await client.db("my_db")
+//     .collection("my_collection")
+//     .findOne({ my_item: my_item })
 
-  return res.json(item)
-})
+//   return res.json(item)
+// })
 
 
 // client.connect(err => {
@@ -90,6 +90,9 @@ const httpServer = http.createServer(app);
 httpServer.listen(config.PORT, async () => {
   console.log(`Moralis Server is running on port ${config.PORT}.`);
 });
+
+// This will enable the Live Query real-time server
+ParseServer.createLiveQueryServer(httpServer);
 
 })
     .catch(err => { console.log(err); });

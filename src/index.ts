@@ -135,17 +135,17 @@ app.use(express.json());
 
 
 
-//       app.listen(config.PORT, () => {
-//         console.log("listening for requests");
-//       })
+      app.listen(config.PORT, () => {
+        console.log("listening for requests");
+      })
 
-app.use(`/server`, parseServer.app);
+// app.use(`/server`, parseServer.app);
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 
-httpServer.listen(config.PORT, async () => {
-  console.log(`Moralis Server is running on port ${config.PORT}.`);
-});
+// httpServer.listen(config.PORT, async () => {
+//   console.log(`Moralis Server is running on port ${config.PORT}.`);
+// });
 
 
 

@@ -61,28 +61,38 @@ app.use(express.json());
 
 // Create a new MongoClient
 // const client = new MongoClient(`mongodb://${process.env.DATABASE_URI}:${PORT}`);
-// const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
+const client = new MongoClient(`${process.env.DATABASE_URI}:${config.PORT}`);
 
-// app.get("/items/:my_item", async (req, res) => {
-//   let my_item = req.params.my_item;
-//   let item = await client.db("my_db")
-//     .collection("my_collection")
-//     .findOne({ my_item: my_item })
+app.get("/items/:my_item", async (req, res) => {
+  let my_item = req.params.my_item;
+  let item = await client.db("my_db")
+    .collection("my_collection")
+    .findOne({ my_item: my_item })
 
-//   return res.json(item)
-// })
-
-// // client.connect(err => {
-// client.connect().then(() => {
-//   // if (err) { console.error(err); return false; }
+  return res.json(item)
+})
 
 
-//   // connection to mongo is successful, listen for requests
-//   app.listen(PORT, () => {
-//     console.log("listening for requests");
-//   })
+// client.connect(err => {
+client.connect().then(() => {
+  // if (err) { console.error(err); return false; }
 
-// });
+
+  // // connection to mongo is successful, listen for requests
+  // app.listen(PORT, () => {
+  //   console.log("listening for requests");
+  // })
+
+  app.use(`/server`, parseServer.app);
+
+const httpServer = http.createServer(app);
+
+httpServer.listen(config.PORT, async () => {
+  console.log(`Moralis Server is running on port ${config.PORT}.`);
+});
+
+})
+    .catch(err => { console.log(err); });
 
 
 
@@ -136,15 +146,15 @@ app.use(express.json());
 
 
 
-app.use(`/server`, parseServer.app);
+// app.use(`/server`, parseServer.app);
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 
-httpServer.listen(config.PORT, async () => {
-  console.log(`Moralis Server is running on port ${config.PORT}.`);
-});
+// httpServer.listen(config.PORT, async () => {
+//   console.log(`Moralis Server is running on port ${config.PORT}.`);
+// });
 
 
 
-// This will enable the Live Query real-time server
-ParseServer.createLiveQueryServer(httpServer);
+// // This will enable the Live Query real-time server
+// ParseServer.createLiveQueryServer(httpServer);

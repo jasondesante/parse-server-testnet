@@ -150,4 +150,4 @@ httpServer.listen(config.PORT, async () => {
 
 
 // // This will enable the Live Query real-time server
-ParseServer.createLiveQueryServer(httpServer);
+// ParseServer.createLiveQueryServer(httpServer);
